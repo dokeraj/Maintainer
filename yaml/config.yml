@@ -5,6 +5,8 @@ general_settings:
   initial_backup: true
   ## Number of backup sessions to keep. NOTE: if not specified, by default only the latest 3 backups will be kept
   backups_count: 3
+  ## Compression level - from 1 to 9
+  compression: 5
 
 ## DELETE THE ONE YOU DON'T NEED. This is the schedule when you want the script to run and make backup / update
 backup_schedule:
