@@ -78,7 +78,10 @@ def createBackup(config, dockerClient):
         f.close()
 
         # zip the contents from /appData to /backup
-        exclude = set(service.exclusions)
+        if service.exclusions is not None:
+            exclude = set(service.exclusions)
+        else:
+            exclude = set()
 
         with ZipFile(file=os.path.join(pathToService, f"{service.name}.zip"), mode='w', compression=zipfile.ZIP_LZMA,
                      compresslevel=9) as zipObj:
