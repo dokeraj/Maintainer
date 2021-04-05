@@ -1,0 +1,48 @@
+general_settings:
+  ## DELETE IF NOT NEEDED. Image digest to use for watchtower. It should be in the format of "sha256:<SOME_LONG_STRING>". Note: if this is omitted then the latest watchtower image will be used.
+  watchtower_digest: <PASTE IMAGE DIGEST HERE>
+  ## should the script make a backup when starting for the first time
+  initial_backup: true
+  ## Number of backup sessions to keep. NOTE: if not specified, by default only the latest 3 backups will be kept
+  backups_count: 3
+
+## DELETE THE ONE YOU DON'T NEED
+backup_schedule:
+  ## DELETE IF NOT NEEDED
+  weekly:
+    ## available values are MON, TUE, WED, THU, FRI, SAT, SUN.
+    day: <INPUT DAY HERE>
+    ## Use HH:mm format
+    time: <HH:mm>
+  ## DELETE IF NOT NEEDED
+  daily:
+    ## Use HH:mm format
+    time: <HH:mm>
+  ## DELETE IF NOT NEEDED
+  last_day_of_month:
+    ## available values are MON, TUE, WED, THU, FRI, SAT, SUN.
+    day: <INPUT DAY HERE>
+    ## Use HH:mm format
+    time: <HH:mm>
+
+## add as many services you'd like
+services_to_backup:
+  postgres: ## NOTE: this name must be the same name as the docker container, that is currently listed in the docker service (use `docker ps -a`)! This will also be the name of the backed up archive.
+      ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole ; NOTE: It must start with folder /appData/
+      root_directory: /appData/<RELATIVE PATH TO CONF FOLDER OF SERVICE>
+      ## DELETE IF YOU WANT TO BACKUP ALL CONTENT IN THE root_directory. list of folder and files to disregard (will be ignored when making a backup). Note: just specify the name of the folder or file - NO NEED to add the absolute path.
+      exclusions:
+        - subfolder1
+        - log_file.txt
+        - otherFolder
+  pihole: ## type the name of the service. This will be the name of the backed up archive
+    ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole ; NOTE: It must start with folder /appData/
+    root_directory: /appData/pihole
+    ## ## DELETE IF YOU WANT TO BACKUP ALL CONTENT IN THE root_directory. list of folder and files to disregard (will be ignored when making a backup). Note: just specify the name of the folder or file - NO NEED to add the absolute path.
+    exclusions:
+      - exampleFolder1
+      - db_file.sql3
+
+discord_webhooks: ## DELETE IF NOT USED. Notifications
+  maintainer: <PASTE YOUR DISCORD WEBHOOK HERE>
+  watchtower: <PASTE YOUR DISCORD WEBHOOK HERE>
