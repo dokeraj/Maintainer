@@ -97,7 +97,12 @@ def createBackup(config, dockerClient):
                     repath = root[root.find(f"/{service.name}"):]
                     rootFilePath = os.path.join(root, file)
                     zippedFilePath = os.path.join(repath, file)
-                    zipObj.write(rootFilePath, zippedFilePath)
+                    try:
+                        zipObj.write(rootFilePath, zippedFilePath)
+                    except Exception as e:
+                        print(f"WARN: {e}")
+                        continue
+
 
     # delete the old backups
     deleteOldBackups(config)
