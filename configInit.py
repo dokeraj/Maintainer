@@ -12,6 +12,7 @@ class DockerService:
     name: str
     rootDir: str
     exclusions: list
+    stopContainer: bool
 
 
 @dataclass
@@ -185,7 +186,7 @@ def initConfig(dockerClient):
                                     print(f"ERROR: Cannot find docker container with name {serviceKey}! Check the services_to_backup object in the config.yml. Now exiting!")
                                     sys.exit(0)
 
-                                tmpService = DockerService(serviceKey, None, None)
+                                tmpService = DockerService(serviceKey, None, None, True)
                                 tmpExclusionFiles = set()
                                 for serviceSetting, serviceSettingVal in serviceVal.items():
                                     if serviceSetting == "root_directory" and serviceSettingVal is not None:
@@ -202,6 +203,8 @@ def initConfig(dockerClient):
                                         for item in serviceSettingVal:
                                             tmpExclusionFiles.add(util.safeCast(item, str))
                                         tmpService.exclusions = set(filter(None, tmpExclusionFiles))
+                                    if serviceSetting == "stop_container" and serviceSettingVal is not None:
+                                        tmpService.stopContainer = util.safeCastBool(serviceSettingVal, True)
                                 tmpSetServices.append(tmpService)
 
                             conf.dockerServices = tmpSetServices

@@ -38,8 +38,17 @@ def deleteOldBackups(config):
 
 
 def stopContainers(config, dockerClient):
-    util.notifyUser(13408299, config, True, descMsg=f"Stopping the selected {len(config.dockerServices)} containers")
+    containersToStop = []
+    containersNoStopping = []
     for service in config.dockerServices:
+        if service.stopContainer:
+            containersToStop.append(service)
+        else:
+            containersNoStopping.append(service)
+
+    util.notifyUser(13408299, config, True, descMsg=f"Stopping {len(containersToStop)} containers.\nNumber of containers that won't be stopped = {len(containersNoStopping)}")
+
+    for service in containersToStop:
         container = dockerClient.containers.get(service.name)
         container.stop()
 
@@ -55,7 +64,7 @@ def createBackup(config, dockerClient):
     # stop the containers
     stopContainers(config, dockerClient)
 
-    util.notifyUser(13408299, config, True, f":books: Creating backup zipped files for each service", "This may take a while..")
+    util.notifyUser(13408299, config, True, f":books: Starting with the backup process (one zipped archive for each service)", "This may take a while..")
     timeNow = str(datetime.now().strftime('%Y_%m_%d %H-%M-%S'))
     currentBckUpJobPath = os.path.join(rootBackupDir, timeNow)
 

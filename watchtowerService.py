@@ -22,11 +22,11 @@ def update(config, dockerClient):
             dockerClient.containers.run(config.watchtowerImage,
                                         command=["--run-once=true", "--cleanup=true", "--include-stopped=true"],
                                         name="watchtower", volumes=bindVolume,
-                                        remove=True, environment=watchtowerEnvironmentVars)
+                                        environment=watchtowerEnvironmentVars)
         else:
             dockerClient.containers.run(config.watchtowerImage,
                                         command=["--run-once=true", "--cleanup=true", "--include-stopped=true"],
-                                        name="watchtower", volumes=bindVolume, remove=True)
+                                        name="watchtower", volumes=bindVolume)
     except Exception as e:
         util.notifyUser(14297642, config, True,
                         descMsg=f""""ERROR: Couldn't not run watchtower container! Please check the watchtower's image digest! No images were updated! Run watchtower manually! Now Exiting! {e}""")

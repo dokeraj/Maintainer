@@ -34,6 +34,8 @@ services_to_backup:
   postgres: ## NOTE: this name must be the same name as the docker container, that is currently listed in the docker service (use `docker ps -a`)! This will also be the name of the backed up archive.
       ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole; NOTE: This depends on what folder you've bound when creating the container. It must start with path /appData/
       root_directory: /appData/<RELATIVE PATH TO CONF FOLDER OF SERVICE>
+      ## should Maintainer stop the container before doing the backup. Note: If omitted it will default to true
+      stop_container: true
       ## DELETE IF YOU WANT TO BACKUP ALL CONTENT IN THE root_directory. This is a list of folder and files to disregard (will be ignored when making a backup). Note: just specify the name of the folder or file - NO NEED to add the absolute path.
       exclusions:
         - subfolder1
@@ -42,6 +44,8 @@ services_to_backup:
   pihole: ## NOTE: this name must be the same name as the docker container, that is currently listed in the docker service (use `docker ps -a`)! This will also be the name of the backed up archive.
     ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole; NOTE: This depends on what folder you've bound when creating the container. It must start with path /appData/
     root_directory: /appData/<RELATIVE PATH TO CONF FOLDER OF SERVICE>
+    ## should Maintainer stop the container before doing the backup. Note: If omitted it will default to true
+    stop_container: false
     ## ## DELETE IF YOU WANT TO BACKUP ALL CONTENT IN THE root_directory. list of folder and files to disregard (will be ignored when making a backup). Note: just specify the name of the folder or file - NO NEED to add the absolute path.
     exclusions:
       - exampleFolder1
