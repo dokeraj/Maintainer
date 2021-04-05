@@ -28,7 +28,7 @@ backup_schedule:
 ## add as many services you'd like
 services_to_backup:
   postgres: ## NOTE: this name must be the same name as the docker container, that is currently listed in the docker service (use `docker ps -a`)! This will also be the name of the backed up archive.
-      ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole ; NOTE: This depends on what folder you've bound when creating the container. It must start with path /appData/
+      ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole; NOTE: This depends on what folder you've bound when creating the container. It must start with path /appData/
       root_directory: /appData/<RELATIVE PATH TO CONF FOLDER OF SERVICE>
       ## DELETE IF YOU WANT TO BACKUP ALL CONTENT IN THE root_directory. This is a list of folder and files to disregard (will be ignored when making a backup). Note: just specify the name of the folder or file - NO NEED to add the absolute path.
       exclusions:
@@ -36,7 +36,8 @@ services_to_backup:
         - log_file.txt
         - otherFolder
   pihole: ## NOTE: this name must be the same name as the docker container, that is currently listed in the docker service (use `docker ps -a`)! This will also be the name of the backed up archive.
-     ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole ; NOTE: This depends on what folder you've bound when creating the container. It must start with path /appData/
+    ## add the root folder where the service has it's files that you want to backup; Example: /appData/pihole; NOTE: This depends on what folder you've bound when creating the container. It must start with path /appData/
+    root_directory: /appData/<RELATIVE PATH TO CONF FOLDER OF SERVICE>
     ## ## DELETE IF YOU WANT TO BACKUP ALL CONTENT IN THE root_directory. list of folder and files to disregard (will be ignored when making a backup). Note: just specify the name of the folder or file - NO NEED to add the absolute path.
     exclusions:
       - exampleFolder1
