@@ -1,7 +1,7 @@
 general_settings:
   ## DELETE IF NOT NEEDED. Image digest to use for watchtower. It should be in the format of "sha256:<SOME_LONG_STRING>". Note: if this field is omitted then the latest watchtower image will be used.
   watchtower_digest: <PASTE IMAGE DIGEST HERE>
-  ## should the script make a backup and update when starting for the first time. Note: it will also create a file ".initialBackup" in your bound backup folder. If that file is present, then on the next restart of Maintainer, the backup will **NOT** be run.
+  ## should the script make a backup and update when starting for the first time. Note: it will also create a file ".initialBackup" in your bound backup folder. If that file is present, then on the next restart of Maintainer, the backup will **NOT** be run. Additional Note: This setting will not affect the "backup_schedule" settings
   initial_backup: true
   ## Number of backup sessions to keep. NOTE: if not specified, by default only the latest 3 backups will be kept
   backups_count: 3
