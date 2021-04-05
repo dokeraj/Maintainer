@@ -13,16 +13,18 @@ import util
 def checkBinds(dockerClient):
     appDataBind = "/appData"
     backupBind = "/backup"
-    for container in dockerClient.containers.list(
-            filters={"ancestor": "dokeraj/maintainer"}):
-        listHasBinds = []
-        for bind in container.attrs["HostConfig"]["Binds"]:
-            if backupBind in bind.split(":")[-1]:
-                listHasBinds.append(True)
-            if appDataBind in bind.split(":")[-1]:
-                listHasBinds.append(True)
-        filteredBinds = [hasBind for hasBind in listHasBinds if hasBind]
-        return len(filteredBinds) == 2
+    for container in dockerClient.containers.list():
+        if "dokeraj/maintainer" in container.attrs["Config"]["Image"]:
+            listHasBinds = []
+            for bind in container.attrs["HostConfig"]["Binds"]:
+                if backupBind in bind.split(":")[-1]:
+                    listHasBinds.append(True)
+                if appDataBind in bind.split(":")[-1]:
+                    listHasBinds.append(True)
+            filteredBinds = [hasBind for hasBind in listHasBinds if hasBind]
+            return len(filteredBinds) == 2
+        else:
+            return False
 
 
 def mainLastDayOfMonth(config, client):
