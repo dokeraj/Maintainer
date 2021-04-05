@@ -83,7 +83,12 @@ def createBackup(config, dockerClient):
         else:
             exclude = set()
 
-        with ZipFile(file=os.path.join(pathToService, f"{service.name}.zip"), mode='w', compression=zipfile.ZIP_LZMA,
+        if config.useCompression:
+            zipType = zipfile.ZIP_LZMA
+        else:
+            zipType = zipfile.ZIP_STORED
+
+        with ZipFile(file=os.path.join(pathToService, f"{service.name}.zip"), mode='w', compression=zipType,
                      compresslevel=config.compressionLevel) as zipObj:
             for root, dirs, files in os.walk(service.rootDir, topdown=True):
                 dirs[:] = [d for d in dirs if d not in exclude]

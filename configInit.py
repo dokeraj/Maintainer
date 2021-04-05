@@ -31,10 +31,11 @@ class Config:
     maintainerUrl: str
     watchtowerUrl: str
     backupsToKeep: int
+    useCompression: bool
     compressionLevel: int
 
 
-conf = Config("containrrr/watchtower:latest", False, None, None, None, None, None, None, 3, 5)
+conf = Config("containrrr/watchtower:latest", False, None, None, None, None, None, None, 3, False, 5)
 
 
 def checkMandatoryFields():
@@ -70,6 +71,7 @@ def printSetConfig():
     resultStr += f"- watchtower_digest = {conf.watchtowerImage}\n"
     resultStr += f"- initial_backup = {conf.initialBackup}\n"
     resultStr += f"- backups_count = {conf.backupsToKeep}\n"
+    resultStr += f"- use_compression = {conf.useCompression}\n"
     resultStr += f"- compression_level = {conf.compressionLevel}\n"
 
     resultStr += f"Backup Schedule:\n"
@@ -114,6 +116,8 @@ def initConfig(dockerClient):
                                     conf.initialBackup = util.safeCastBool(generalVal, False)
                                 if generalKey == "backups_count" and generalVal is not None:
                                     conf.backupsToKeep = util.safeCast(generalVal, int, 3)
+                                if generalKey == "use_compression" and generalVal is not None:
+                                    conf.useCompression = util.safeCastBool(generalVal, False)
                                 if generalKey == "compression_level" and generalVal is not None:
                                     compressionLevel = util.safeCast(generalVal, int, 5)
                                     if compressionLevel > 0 and compressionLevel < 10:
