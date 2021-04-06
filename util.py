@@ -20,7 +20,7 @@ def isTimeFormat(inputTime):
     try:
         time.strptime(inputTime, '%H:%M')
         return True
-    except ValueError:
+    except Exception as e:
         return False
 
 

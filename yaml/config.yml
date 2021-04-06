@@ -16,17 +16,17 @@ backup_schedule:
   weekly:
     ## available values are MON, TUE, WED, THU, FRI, SAT, SUN.
     day: <INPUT DAY HERE>
-    ## Use HH:mm format
+    ## Use HH:mm format and wrap the time in quatation marks e.g. "14:28"
     time: <HH:mm>
   ## DELETE IF NOT NEEDED
   daily:
-    ## Use HH:mm format
+    ## Use HH:mm format and wrap the time in quatation marks e.g. "14:28"
     time: <HH:mm>
   ## DELETE IF NOT NEEDED. This schedule will run the backup/update procedure, on the specified day on the last week of the current month
   last_day_of_month:
     ## available values are MON, TUE, WED, THU, FRI, SAT, SUN.
     day: <INPUT DAY HERE>
-    ## Use HH:mm format
+    ## Use HH:mm format and wrap the time in quatation marks e.g. "14:28"
     time: <HH:mm>
 
 ## add as many services you'd like
