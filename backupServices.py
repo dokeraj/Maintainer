@@ -22,6 +22,8 @@ def checkForInitialBackup(config, dockerClient):
             main.startMainProcess(config, dockerClient)
         else:
             print("""Skipping Initial backup! reason: Found the file '.initBackup'""")
+    else:
+        print("""Skipping Initial backup! reason: Initial backup has been set to 'False' by user in the config.yml file""")
 
 
 def deleteOldBackups(config):

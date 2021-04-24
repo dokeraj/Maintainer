@@ -62,37 +62,37 @@ def handleScheduling(config, dockerClient):
     if config.dailySchedule is not None:
         schedule.every().day.at(config.dailySchedule.time).do(startMainProcess, config, dockerClient)
     if config.weeklySchedule is not None:
-        if config.weeklySchedule == "MON":
+        if config.weeklySchedule.day == "MON":
             schedule.every().monday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
-        if config.weeklySchedule == "TUE":
+        if config.weeklySchedule.day == "TUE":
             schedule.every().tuesday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
-        if config.weeklySchedule == "WED":
+        if config.weeklySchedule.day == "WED":
             schedule.every().wednesday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
-        if config.weeklySchedule == "THU":
+        if config.weeklySchedule.day == "THU":
             schedule.every().thursday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
-        if config.weeklySchedule == "FRI":
+        if config.weeklySchedule.day == "FRI":
             schedule.every().friday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
-        if config.weeklySchedule == "SAT":
+        if config.weeklySchedule.day == "SAT":
             schedule.every().saturday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
-        if config.weeklySchedule == "SUN":
+        if config.weeklySchedule.day == "SUN":
             schedule.every().sunday.at(config.weeklySchedule.time).do(startMainProcess, config, dockerClient)
     if config.lastDayOfMonthSchedule is not None:
-        if config.lastDayOfMonthSchedule == "MON":
+        if config.lastDayOfMonthSchedule.day == "MON":
             schedule.every().monday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config, dockerClient)
-        if config.lastDayOfMonthSchedule == "TUE":
+        if config.lastDayOfMonthSchedule.day == "TUE":
             schedule.every().tuesday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config, dockerClient)
-        if config.lastDayOfMonthSchedule == "WED":
+        if config.lastDayOfMonthSchedule.day == "WED":
             schedule.every().wednesday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config,
                                                                                  dockerClient)
-        if config.lastDayOfMonthSchedule == "THU":
+        if config.lastDayOfMonthSchedule.day == "THU":
             schedule.every().thursday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config,
                                                                                 dockerClient)
-        if config.lastDayOfMonthSchedule == "FRI":
+        if config.lastDayOfMonthSchedule.day == "FRI":
             schedule.every().friday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config, dockerClient)
-        if config.lastDayOfMonthSchedule == "SAT":
+        if config.lastDayOfMonthSchedule.day == "SAT":
             schedule.every().saturday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config,
                                                                                 dockerClient)
-        if config.lastDayOfMonthSchedule == "SUN":
+        if config.lastDayOfMonthSchedule.day == "SUN":
             schedule.every().sunday.at(config.lastDayOfMonthSchedule.time).do(mainLastDayOfMonth, config, dockerClient)
 
 
