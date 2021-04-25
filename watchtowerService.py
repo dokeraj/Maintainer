@@ -3,12 +3,24 @@ import util
 
 
 def update(config, dockerClient):
+    util.notifyUser(13408299, config, True, descMsg=f"Cleaning up all watchtower images and containers..")
+
     # remove watchtower container if it exists
     try:
-        watchtower = dockerClient.containers.get("watchtower")
-        watchtower.remove()
+        for container in dockerClient.containers.list(all=True):
+            if "containrrr/watchtower" in container.attrs["Config"]["Image"]:
+                container.remove(force=True)
+
+        imagesToRemove = []
+        for im in dockerClient.images.list():
+            if any("containrrr/watchtower" in s for s in im.attrs["RepoTags"]):
+                imagesToRemove.append(im.attrs["Id"])
+
+        for imgId in imagesToRemove:
+            dockerClient.images.remove(image=imgId, force=True)
+
     except Exception as e:
-        None
+        print("Error: couldn't remove watchtower container! This may potentially create duplicate containers", e)
 
     util.notifyUser(3387350, config, True, descMsg=f"Please welcome Watchtower service to the main stage..")
 
