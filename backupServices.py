@@ -48,7 +48,13 @@ def stopContainers(config, dockerClient):
         else:
             containersNoStopping.append(service)
 
-    util.notifyUser(13408299, config, True, descMsg=f"Stopping {len(containersToStop)} containers.\nNumber of containers that won't be stopped = {len(containersNoStopping)}")
+    cNamesStoppedSet = set()
+    for cNoStop in containersNoStopping:
+        cNamesStoppedSet.add(f"- __{cNoStop}__")
+
+    containersStoppedStr = "\n".join(cNamesStoppedSet)
+
+    util.notifyUser(13408299, config, True, descMsg=f"Stopping {len(containersToStop)} containers.\nThe following containers will NOT be stopped = {containersStoppedStr}")
 
     for service in containersToStop:
         container = dockerClient.containers.get(service.name)
@@ -82,10 +88,9 @@ def createBackup(config, dockerClient):
 
         # put image digest to file in service folder
         container = dockerClient.containers.get(service.name)
-        imageDigest = container.attrs["Image"]
-        imageName = container.attrs["Config"]["Image"].split(":")[0]
+        imageDigest = container.attrs["Config"]["Image"]
         f = open(os.path.join(pathToService, "imageDigest.txt"), "w")
-        f.write(f"{imageName}@{imageDigest}")
+        f.write(imageDigest)
         f.close()
 
         # zip the contents from /appData to /backup

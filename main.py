@@ -27,6 +27,20 @@ def checkBinds(dockerClient):
             return False
 
 
+def checkIfContainersExist(config, dockerClient):
+    for service in config.dockerServices:
+        try:
+            print(f"Trying to get container ${service.name}!")
+            dockerClient.containers.get(service.name)
+        except Exception as e:
+            util.notifyUser(15539485, config, True,
+                            f"Error while checking available Docker containers",
+                            f"Cannot find the container `{service.name}` in docker server. \nThis means that the selected container: `{service.name}` cannot be backed up. **Maintainer** will now shut down!")
+            ## this will not invoke deathwatch
+            sys.exit()
+
+
+
 def mainLastDayOfMonth(config, client):
     # check to see if it is in fact the last day of the month - and if so, then allow the schedule to take place
     today = datetime.today()
@@ -44,6 +58,8 @@ def startMainProcess(config, dockerClient):
 
     containerNames = "\n".join(cNamesSet)
     util.notifyUser(4967467, config, True, ":checkered_flag: Starting scheduled docker update process", f"The following services will be backed up:\n{containerNames}")
+
+    checkIfContainersExist(config, dockerClient)
 
     ## backup All Specified Services
     backupServices.createBackup(config, dockerClient)
