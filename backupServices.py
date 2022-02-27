@@ -46,7 +46,7 @@ def stopContainers(config, dockerClient):
         if service.stopContainer:
             containersToStop.append(service)
         else:
-            containersNoStopping.append(service)
+            containersNoStopping.append(service.name)
 
     cNamesStoppedSet = set()
     for cNoStop in containersNoStopping:
@@ -54,7 +54,7 @@ def stopContainers(config, dockerClient):
 
     containersStoppedStr = "\n".join(cNamesStoppedSet)
 
-    util.notifyUser(13408299, config, True, descMsg=f"Stopping {len(containersToStop)} containers.\nThe following containers will NOT be stopped = {containersStoppedStr}")
+    util.notifyUser(13408299, config, True, descMsg=f":small_red_triangle_down: Stopping {len(containersToStop)} containers.\n:small_orange_diamond: The following containers will NOT be stopped:\n{containersStoppedStr}")
 
     for service in containersToStop:
         container = dockerClient.containers.get(service.name)
